@@ -74,12 +74,9 @@ for i in y_train:
     counter += 1
 
 # N_jc
-N_j1 = np.sum(x_train[spam_train_index], axis=0)
-N_j0 = np.sum(x_train[not_spam_train_index], axis=0)
-print("aaaa", N_j1[56])
-print("aaaa", N_j0[56])
+N_j1 = np.sum(x_train_binarization[spam_train_index], axis=0)
+N_j0 = np.sum(x_train_binarization[not_spam_train_index], axis=0)
 N_jc = np.vstack((N_j1, N_j0))
-
 
 
 # theta_jc.shape = (2, 57)，first row is the prob for each feature when the mail is a spam
@@ -88,6 +85,50 @@ def cal_theta_jc(alpha):
     theta_jc = (N_jc + alpha) / (N_c + 2 * alpha)
     return theta_jc
 
+
+def classify_error(emails, emails_label, theta_jc):
+    error_counter = 0
+    log_p_pred_spam = np.empty((len(emails), 1))
+    log_p_pred_not_spam = np.empty((len(emails), 1))
+    for mail_id in range(len(emails)):
+        a_not_spam = 0
+        a_spam = 0
+        for feature_id in range(len(emails[mail_id])):
+            b_spam = emails[mail_id][feature_id] * log(theta_jc[0][feature_id]) + (
+                    1 - emails[mail_id][feature_id]) * (1 - theta_jc[0][feature_id])
+            a_spam = a_spam + b_spam
+
+            b_not_spam = emails[mail_id][feature_id] * log(theta_jc[1][feature_id]) + (
+                    1 - emails[mail_id][feature_id]) * (1 - theta_jc[1][feature_id])
+            a_not_spam = a_not_spam + b_not_spam
+
+        log_p_pred_spam[mail_id] = log(pi_c[0]) + a_spam
+        log_p_pred_not_spam[mail_id] = log(pi_c[1]) + a_not_spam
+
+        if log_p_pred_spam[mail_id] > log_p_pred_not_spam[mail_id]:
+            y_pred = 1
+        else:
+            y_pred = 0
+
+        if y_pred != emails_label[mail_id]:
+            error_counter += 1
+
+    error_rate = error_counter / len(emails_label)
+
+    return error_rate
+
+
+for i in [1, 10, 100]:
+    theta_jc = cal_theta_jc(i)
+    emails = x_train_binarization
+    emails_label = y_train
+    train_error_rate = classify_error(emails, emails_label, theta_jc)
+    print("error rate on training set when alpha=%s is:" % i, train_error_rate)
+
+    emails = x_test_binarization
+    emails_label = y_test
+    test_error_rate = classify_error(emails, emails_label, theta_jc)
+    print("error rate on test set when alpha=%s is:" % i, test_error_rate)
 
 # classify
 #############################################################################
@@ -99,39 +140,3 @@ def cal_theta_jc(alpha):
 #
 #     break
 #############################################################################
-error_counter = 0
-theta_jc = cal_theta_jc(1)
-print(theta_jc)
-log_p_pred_spam = np.empty((len(x_train), 1))
-log_p_pred_not_spam = np.empty((len(x_train), 1))
-# for mail_id in range(len(x_train)):
-for mail_id in range(5):
-    a_not_spam = 0
-    a_spam = 0
-    for feature_id in range(len(x_train[mail_id])):
-        b_spam = x_train[mail_id][feature_id] * log(theta_jc[0][feature_id]) + (
-                1 - x_train[mail_id][feature_id]) * (1 - theta_jc[0][feature_id])
-        a_spam = a_spam + b_spam
-
-        b_not_spam = x_train[mail_id][feature_id] * log(theta_jc[1][feature_id]) + (
-                1 - x_train[mail_id][feature_id]) * (1 - theta_jc[1][feature_id])
-        a_not_spam = a_not_spam + b_not_spam
-
-    log_p_pred_spam[mail_id] = log(pi_c[0]) + a_spam
-    log_p_pred_not_spam[mail_id] = log(pi_c[1]) + a_not_spam
-
-    if log_p_pred_spam[mail_id] > log_p_pred_not_spam[mail_id]:
-        y_pred = 1
-    else:
-        y_pred = 0
-
-    if y_pred != y_train[mail_id]:
-        error_counter += 1
-
-    print(y_pred)
-    print(y_train[mail_id])
-    print(error_counter)
-    print()
-error_rate = error_counter / len(y_train)
-
-print(error_rate)
