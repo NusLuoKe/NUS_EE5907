@@ -35,9 +35,15 @@ y_train = spam_data['ytrain']
 # z-normalise features
 def z_norm(mail_array):
     colum_mean = np.mean(mail_array, axis=0)
-    colum_stddev = np.sum((mail_array - colum_mean)**2, axis=0) / len(mail_array)
-    cd = np.std(mail_array, axis=0)
-    return (mail_array - colum_mean) / colum_stddev
+    colum_var = np.var(mail_array, axis=0)
+    return (mail_array - colum_mean) / colum_var
+
+
+a = np.array([[1, 1], [2, 4], [3, 7]])
+b = z_norm(a)
+print(np.mean(b, axis=0))
+print(np.var(b, axis=0))
+print(b)
 
 
 # log-normalise features
