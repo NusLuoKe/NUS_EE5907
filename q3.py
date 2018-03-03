@@ -4,12 +4,11 @@
 # @File    : q3.py
 # @Author  : NusLuoKe
 
-from numpy import exp
-from math import pi as PI
-
 import numpy as np
 import scipy.io
+from numpy import exp
 from numpy import log
+from numpy.linalg import inv
 
 # load the given spam data
 spam_data_path = 'T:/EE5907R/spamData.mat'
@@ -78,6 +77,8 @@ def sigmoid(x):
 lamda_1 = np.arange(1, 10, 1)
 lamda_2 = np.arange(10, 105, 5)
 lamda_value = np.hstack((lamda_1, lamda_2))
+
+
 #############################################################
 # binarization
 for lamda_ in lamda_value:
@@ -92,8 +93,14 @@ for lamda_ in lamda_value:
     c = np.hstack((a, b))
     lamda = np.diag(c[0]) * lamda_
     g_reg = g + lamda * omega_with_bias.T
+    # print(g_reg.shape)
     s = np.dot(mu, (1 - mu).T)
     h = np.dot(np.dot(x_train_binarization.T, s), x_train_binarization)
+    print(h.shape)
+    h_reg = h + lamda * np.eye(58)
+
+    while True:
+        omega_with_bias = omega_with_bias - np.dot(inv(h_reg), g_reg)
 
 
 ####################################################################
