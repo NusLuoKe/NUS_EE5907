@@ -5,12 +5,12 @@
 # @Author  : NusLuoKe
 
 
-import scipy.io
-import numpy as np
-from numpy import log
-from math import pi as PI
 from math import exp
-import matplotlib.pyplot as plt
+from math import pi as PI
+
+import numpy as np
+import scipy.io
+from numpy import log
 
 # load the given spam data
 spam_data_path = 'T:/EE5907R/spamData.mat'
