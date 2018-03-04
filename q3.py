@@ -11,8 +11,9 @@ from numpy import log
 from numpy.linalg import inv
 
 # load the given spam data
-spam_data_path = 'T:/EE5907R/spamData.mat'
-spam_data = scipy.io.loadmat(spam_data_path)
+# spam_data_path = 'T:/EE5907R/spamData.mat'
+# spam_data = scipy.io.loadmat(spam_data_path)
+spam_data = scipy.io.loadmat('spamData.mat')
 
 # print to see some basic information
 print(spam_data.keys())
