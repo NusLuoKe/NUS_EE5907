@@ -69,13 +69,13 @@ k_value = np.hstack((k_1, k_2))
 ##############################################################
 ##############################################################
 
-def pred_spam(k, mail, mail_label):
+def pred_spam(k, mail, mail_label, train_mail):
     mail_pred = []
     for mail_a_id in range(len(mail)):
         mail_a = mail[mail_a_id]
         dist_mail_single_a = []
-        for mail_b_id in range(len(mail)):
-            mail_b = mail[mail_b_id]
+        for mail_b_id in range(len(train_mail)):
+            mail_b = train_mail[mail_b_id]
 
             a = ((mail_a - mail_b) ** 2)
             b = np.sum(a)
@@ -110,76 +110,46 @@ def error_rate(mail_pred, mail_label):
     return error_rate
 
 
-# z_norm
-# k = 1
-mail_pred = pred_spam(1, x_train_znorm, y_train)
-print("error rate for z-normalization on training set when k=1 is:", error_rate(mail_pred, y_train))
-mail_pred = pred_spam(1, x_test_znorm, y_test)
-print("error rate for z-normalization on test set when k=1 is:", error_rate(mail_pred, y_test))
-
-# k = 10
-mail_pred = pred_spam(10, x_train_znorm, y_train)
-print("error rate for z-normalization on training set when k=10 is:", error_rate(mail_pred, y_train))
-mail_pred = pred_spam(10, x_test_znorm, y_test)
-print("error rate for z-normalization on test set when k=10 is:", error_rate(mail_pred, y_test))
-
-# k = 100
-mail_pred = pred_spam(100, x_train_znorm, y_train)
-print("error rate for z-normalization on training set when k=100 is:", error_rate(mail_pred, y_train))
-mail_pred = pred_spam(100, x_test_znorm, y_test)
-print("error rate for z-normalization on test set when k=100 is:", error_rate(mail_pred, y_test))
-
-print()
-print()
-
-# log_trans
-# k = 1
-mail_pred = pred_spam(1, x_train_logtrans, y_train)
-print("error rate for log-transform on training set when k=1 is:", error_rate(mail_pred, y_train))
-mail_pred = pred_spam(1, x_test_logtrans, y_test)
-print("error rate for log-transform on test set when k=1 is:", error_rate(mail_pred, y_test))
-
-# k = 10
-mail_pred = pred_spam(10, x_train_logtrans, y_train)
-print("error rate for log-transform on training set when k=10 is:", error_rate(mail_pred, y_train))
-mail_pred = pred_spam(10, x_test_logtrans, y_test)
-print("error rate for log-transform on test set when k=10 is:", error_rate(mail_pred, y_test))
-
-# k = 100
-mail_pred = pred_spam(100, x_train_logtrans, y_train)
-print("error rate for log-transform on training set when k=100 is:", error_rate(mail_pred, y_train))
-mail_pred = pred_spam(100, x_test_logtrans, y_test)
-print("error rate for log-transform on test set when k=100 is:", error_rate(mail_pred, y_test))
-
-# z_norm
-for k in k_value:
-    mail_train_pred = pred_spam(k, x_train_znorm, y_train)
-    train_error_rate = error_rate(mail_train_pred, y_train)
-
-    mail_test_pred = pred_spam(k, x_test_znorm, y_test)
-    test_error_rate = error_rate(mail_test_pred, y_test)
-
-plt.figure(1)
-plt.plot(k_value, train_error_rate, color='r', label='train error rate')
-plt.plot(k_value, test_error_rate, color='b', label='test error rate')
-plt.title('Error rate - z_norm - KNN')
-plt.legend(loc=0)
-plt.show()
-
-# log_transform
-for k in k_value:
-    mail_train_pred = pred_spam(k, x_train_logtrans, y_train)
-    train_error_rate = error_rate(mail_train_pred, y_train)
-
-    mail_test_pred = pred_spam(k, x_test_logtrans, y_test)
-    test_error_rate = error_rate(mail_test_pred, y_test)
-
-plt.figure(2)
-plt.plot(k_value, train_error_rate, color='r', label='train error rate')
-plt.plot(k_value, test_error_rate, color='b', label='test error rate')
-plt.title('Error rate - log_transform - KNN')
-plt.legend(loc=0)
-plt.show()
+# # z_norm
+# # k = 1
+# mail_pred = pred_spam(1, x_train_znorm, y_train, x_train_znorm)
+# print("error rate for z-normalization on training set when k=1 is:", error_rate(mail_pred, y_train))
+# mail_pred = pred_spam(1, x_test_znorm, y_train, x_train_znorm)
+# print("error rate for z-normalization on test set when k=1 is:", error_rate(mail_pred, y_test))
+#
+# # k = 10
+# mail_pred = pred_spam(10, x_train_znorm, y_train, x_train_znorm)
+# print("error rate for z-normalization on training set when k=10 is:", error_rate(mail_pred, y_train))
+# mail_pred = pred_spam(10, x_test_znorm, y_train, x_train_znorm)
+# print("error rate for z-normalization on test set when k=10 is:", error_rate(mail_pred, y_test))
+#
+# # k = 100
+# mail_pred = pred_spam(100, x_train_znorm, y_train, x_train_znorm)
+# print("error rate for z-normalization on training set when k=100 is:", error_rate(mail_pred, y_train))
+# mail_pred = pred_spam(100, x_test_znorm, y_train, x_train_znorm)
+# print("error rate for z-normalization on test set when k=100 is:", error_rate(mail_pred, y_test))
+#
+# print()
+# print()
+#
+# # log_trans
+# # k = 1
+# mail_pred = pred_spam(1, x_train_logtrans, y_train, x_train_logtrans)
+# print("error rate for log-transform on training set when k=1 is:", error_rate(mail_pred, y_train))
+# mail_pred = pred_spam(1, x_test_logtrans, y_train, x_train_logtrans)
+# print("error rate for log-transform on test set when k=1 is:", error_rate(mail_pred, y_test))
+#
+# # k = 10
+# mail_pred = pred_spam(10, x_train_logtrans, y_train, x_train_logtrans)
+# print("error rate for log-transform on training set when k=10 is:", error_rate(mail_pred, y_train))
+# mail_pred = pred_spam(10, x_test_logtrans, y_train, x_train_logtrans)
+# print("error rate for log-transform on test set when k=10 is:", error_rate(mail_pred, y_test))
+#
+# # k = 100
+# mail_pred = pred_spam(100, x_train_logtrans, y_train, x_train_logtrans)
+# print("error rate for log-transform on training set when k=100 is:", error_rate(mail_pred, y_train))
+# mail_pred = pred_spam(100, x_test_logtrans, y_train, x_train_logtrans)
+# print("error rate for log-transform on test set when k=100 is:", error_rate(mail_pred, y_test))
 
 
 ##############################################################
@@ -187,16 +157,14 @@ plt.show()
 # method for z_norm and log_trans
 ##############################################################
 ##############################################################
-
-
 # method for binarize features
-def pred_spam_binarization(k, mail, mail_label):
+def pred_spam_binarization(k, mail, mail_label, train_mail):
     mail_pred = []
     for mail_a_id in range(len(mail)):
         mail_a = mail[mail_a_id]
         dist_mail_single_a = []
-        for mail_b_id in range(len(mail)):
-            mail_b = mail[mail_b_id]
+        for mail_b_id in range(len(train_mail)):
+            mail_b = train_mail[mail_b_id]
 
             a = abs(mail_a - mail_b)
             b = np.sum(a)
@@ -223,37 +191,79 @@ def pred_spam_binarization(k, mail, mail_label):
     return mail_pred
 
 
-# binarization
-# k = 1
-mail_pred = pred_spam(1, x_train_binarization, y_train)
-print("error rate for binarization on training set when k=1 is:", error_rate(mail_pred, y_train))
-mail_pred = pred_spam(1, x_test_binarization, y_test)
-print("error rate for binarization on test set when k=1 is:", error_rate(mail_pred, y_test))
+# # binarization
+# # k = 1
+# mail_pred = pred_spam(1, x_train_binarization, y_train, x_train_binarization)
+# print("error rate for binarization on training set when k=1 is:", error_rate(mail_pred, y_train))
+# mail_pred = pred_spam(1, x_test_binarization, y_train, x_train_binarization)
+# print("error rate for binarization on test set when k=1 is:", error_rate(mail_pred, y_test))
+#
+# # k = 10
+# mail_pred = pred_spam(10, x_train_binarization, y_train, x_train_binarization)
+# print("error rate for binarization on training set when k=10 is:", error_rate(mail_pred, y_train))
+# mail_pred = pred_spam(10, x_test_binarization, y_train, x_train_binarization)
+# print("error rate for binarization on test set when k=10 is:", error_rate(mail_pred, y_test))
+#
+# # k = 100
+# mail_pred = pred_spam(100, x_train_binarization, y_train, x_train_binarization)
+# print("error rate for binarization on training set when k=100 is:", error_rate(mail_pred, y_train))
+# mail_pred = pred_spam(100, x_test_binarization, y_train, x_train_binarization)
+# print("error rate for binarization on test set when k=100 is:", error_rate(mail_pred, y_test))
 
-# k = 10
-mail_pred = pred_spam(10, x_train_binarization, y_train)
-print("error rate for binarization on training set when k=10 is:", error_rate(mail_pred, y_train))
-mail_pred = pred_spam(10, x_test_binarization, y_test)
-print("error rate for binarization on test set when k=10 is:", error_rate(mail_pred, y_test))
-
-# k = 100
-mail_pred = pred_spam(100, x_train_binarization, y_train)
-print("error rate for binarization on training set when k=100 is:", error_rate(mail_pred, y_train))
-mail_pred = pred_spam(100, x_test_binarization, y_test)
-print("error rate for binarization on test set when k=100 is:", error_rate(mail_pred, y_test))
-
-
-# binarization
+# z_norm
+train_error_ = []
+test_error_ = []
 for k in k_value:
-    mail_train_pred = pred_spam(k, x_train_binarization, y_train)
+    mail_train_pred = pred_spam(k, x_train_znorm, y_train, x_train_znorm)
     train_error_rate = error_rate(mail_train_pred, y_train)
+    train_error_.append(train_error_rate)
 
-    mail_test_pred = pred_spam(k, x_test_binarization, y_test)
+    mail_test_pred = pred_spam(k, x_test_znorm, y_train, x_train_znorm)
     test_error_rate = error_rate(mail_test_pred, y_test)
+    test_error_.append(test_error_rate)
+
+plt.figure(1)
+plt.plot(k_value, train_error_, color='r', label='train error rate')
+plt.plot(k_value, test_error_, color='b', label='test error rate')
+plt.title('Error rate - z_norm - KNN')
+plt.legend(loc=0)
+plt.show()
+
+# log_transform
+train_error_ = []
+test_error_ = []
+for k in k_value:
+    mail_train_pred = pred_spam(k, x_train_logtrans, y_train, x_train_logtrans)
+    train_error_rate = error_rate(mail_train_pred, y_train)
+    train_error_.append(train_error_rate)
+
+    mail_test_pred = pred_spam(k, x_test_logtrans, y_train, x_train_logtrans)
+    test_error_rate = error_rate(mail_test_pred, y_test)
+    test_error_.append(test_error_rate)
+
+plt.figure(2)
+plt.plot(k_value, train_error_, color='r', label='train error rate')
+plt.plot(k_value, test_error_, color='b', label='test error rate')
+plt.title('Error rate - log_transform - KNN')
+plt.legend(loc=0)
+plt.show()
+
+# binarization
+train_error_ = []
+test_error_ = []
+for k in k_value:
+    mail_train_pred = pred_spam(k, x_train_binarization, y_train, x_train_binarization)
+    train_error_rate = error_rate(mail_train_pred, y_train)
+    train_error_.append(train_error_rate)
+
+    mail_test_pred = pred_spam(k, x_test_binarization, y_train, x_train_binarization)
+    test_error_rate = error_rate(mail_test_pred, y_test)
+    test_error_.append(test_error_rate)
+
 
 plt.figure(3)
-plt.plot(k_value, train_error_rate, color='r', label='train error rate')
-plt.plot(k_value, test_error_rate, color='b', label='test error rate')
+plt.plot(k_value, train_error_, color='r', label='train error rate')
+plt.plot(k_value, test_error_, color='b', label='test error rate')
 plt.title('Error rate - binarization - KNN')
 plt.legend(loc=0)
 plt.show()
