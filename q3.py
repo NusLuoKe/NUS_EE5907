@@ -80,54 +80,101 @@ lamda_value = np.hstack((lamda_1, lamda_2))
 
 #############################################################
 # binarization
-for lamda_ in lamda_value:
+# for lamda_ in lamda_value:
+for lamda_ in [2]:
+    # get mu
     omega_with_bias = np.zeros((1, len(x_train[0]) + 1))
     omega_with_bias_T = omega_with_bias.T
     x = np.dot(x_train_binarization, omega_with_bias_T)
     mu = sigmoid(x)
+    # print(mu)
+    # print(mu.shape)
+
+    print("bbbbbbbbbbaaaaaaaaaa", omega_with_bias)
+    print("bbbbbbbbbaaaaaaaaaab", omega_with_bias.shape)
+
+    # get g_reg
     g = np.dot(x_train_binarization.T, (mu - y_train))
     a = np.zeros((1, 1))
     b = np.ones((1, 57))
     c = np.hstack((a, b))
     lamda = np.diag(c[0]) * lamda_
     g_reg = g + np.dot(lamda, omega_with_bias.T)
-    s = np.dot(mu, (1 - mu).T)
+    # print(g_reg)
+    # print(g_reg.shape)
+
+    # get s
+    s_list = []
+    for i in mu:
+        aaa = i*(1-i)
+        s_list.append(aaa[0])
+    s = np.diag(s_list)
+    # print(s)
+    # print(s.shape)
+
+
+    #get h_reg
     h = np.dot(np.dot(x_train_binarization.T, s), x_train_binarization)
     h_reg = h + lamda * np.eye(58)
-
-    # print(h.shape)
-    # print(lamda)
-    # print(g_reg.shape)
+    # print(h_reg)
     # print(h_reg.shape)
-    # print(omega_with_bias.shape)
-
-    convergence_term = np.dot(inv(h_reg), g_reg)
-    # break
 
     training_step = 0
     max_training_step = 200
-    while training_step < max_training_step :
+    threashold = np.ones((1, 58)) * 0.0001
+
+    while training_step < max_training_step:
         # get mu
+        omega_with_bias = np.zeros((1, len(x_train[0]) + 1))
         omega_with_bias_T = omega_with_bias.T
         x = np.dot(x_train_binarization, omega_with_bias_T)
         mu = sigmoid(x)
+        # print(mu)
+        # print(mu.shape)
 
-        # get g_greg
+        # get g_reg
         g = np.dot(x_train_binarization.T, (mu - y_train))
         a = np.zeros((1, 1))
         b = np.ones((1, 57))
         c = np.hstack((a, b))
         lamda = np.diag(c[0]) * lamda_
         g_reg = g + np.dot(lamda, omega_with_bias.T)
+        # print(g_reg)
 
         # get s
-        s = np.dot(mu, (1 - mu).T)
+        s_list = []
+        for i in mu:
+            aaa = i * (1 - i)
+            s_list.append(aaa[0])
+        s = np.diag(s_list)
+        # print(s)
+        # print(s.shape)
 
         # get h_reg
         h = np.dot(np.dot(x_train_binarization.T, s), x_train_binarization)
         h_reg = h + lamda * np.eye(58)
 
         # update omega_with_bias
-        omega_with_bias = omega_with_bias - convergence_term
+        HH = np.mat(h_reg)
+        try:
+            convergence_term = inv(HH) * g_reg
+        except np.linalg.linalg.LinAlgError:
+            convergence_term = np.linalg.pinv(HH) * g_reg
 
-####################################################################
+        omega_with_bias = omega_with_bias - convergence_term.T
+
+        training_step += 1
+
+# print("bbbbbbbbbb", omega_with_bias)
+print("bbbbbbbbbb", omega_with_bias.shape)
+
+log_odds = np.dot(x_train_binarization, omega_with_bias.T)
+print(log_odds.shape)
+print(log_odds)
+y_pred = 1 * (log_odds > 0)
+print(y_pred)
+true_num = np.sum(1 * (y_pred == y_train))
+error_num = len(y_train) - true_num
+error_rate = error_num / len(y_train)
+print(error_num)
+print(error_rate)
