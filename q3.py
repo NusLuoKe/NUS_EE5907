@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# @Time    : 2018/3/3 14:18
 # @File    : q3.py
 # @Author  : NusLuoKe
 

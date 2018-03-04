@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# @Time    : 2018/3/3 18:47
 # @File    : q4.py
 # @Author  : NusLuoKe
 
@@ -174,7 +173,7 @@ def pred_spam_binarization(k, mail, mail_label, train_mail):
 
             dist_mail_single_a.append(dist_a_to_b)
 
-        dist_small_to_big = np.argsort(dist_mail_single_a) 
+        dist_small_to_big = np.argsort(dist_mail_single_a)
 
         spam_counter = 0
         mail_index = dist_small_to_big[:k]
