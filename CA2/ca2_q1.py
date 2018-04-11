@@ -40,15 +40,6 @@ cov_train = np.matmul(zero_mean_train.transpose(), zero_mean_train) / 60000
 
 # Get eigenvalue and eigenvector of the covariance matrix
 eig_val_train, eig_vect_train = linalg.eig(np.mat(cov_train))
-eig_val_train_sorted = sorted(eig_val_train, reverse=True)
-
-for n in range(784):
-    sum_n_eig_val = sum(eig_val_train_sorted[:n])
-    sum_all_eig_val = sum(eig_val_train_sorted)
-    rate = sum_n_eig_val / sum_all_eig_val
-    if rate > 0.95:
-        print(n)
-        break
 
 # Sort the eigenvalue from largest to smallest
 sorted_eig_val_train = np.argsort(eig_val_train)[::-1]
@@ -80,7 +71,6 @@ model.fit(x40_train, y_train)
 
 # evaluate the model and update the accuracies list
 score = model.score(x40_test, y_test)
-print(score * 100)
 print("reduce the dimensionality of raw data from 784 to 40, accuracy=%.2f%%" % (score * 100))
 
 # x40_train_binarization = 1 * (x40_train > 0)
@@ -145,3 +135,29 @@ model.fit(x200_train, y_train)
 score = model.score(x200_test, y_test)
 print("reduce the dimensionality of raw data from 784 to 200, accuracy=%.2f%%" % (score * 100))
 # @@@@@@@@@@@@@@@@@@@@ N=200 end@@@@@@@@@@@@@@@@@@@@@@@@@
+
+
+# @@@@@Find reduced dimension d preserving over 95% of total energy@@@@@@@@@
+eig_val_train_sorted = sorted(eig_val_train, reverse=True)
+
+for nn in range(784):
+    sum_n_eig_val = sum(eig_val_train_sorted[:nn])
+    sum_all_eig_val = sum(eig_val_train_sorted)
+    rate = sum_n_eig_val / sum_all_eig_val
+    if rate > 0.95:
+        print(nn, "is the required num!")
+        break
+
+nn_eig_val_train_index = sorted_eig_val_train[0:nn]  # take the index of the top n values
+# Get the desired eigen vectors and low dimensional data
+nn_eig_vect_train = eig_vect_train[:, nn_eig_val_train_index]
+xnn_train = np.matmul(zero_mean_train, nn_eig_vect_train)
+xnn_test = np.matmul(zero_mean_test, nn_eig_vect_train)
+
+model = KNeighborsClassifier(n_neighbors=1)
+model.fit(xnn_train, y_train)
+
+# evaluate the model and update the accuracies list
+score = model.score(xnn_test, y_test)
+print("reduce the dimensionality of raw data from 784 to %d, accuracy=%.2f%%" % (nn, score * 100))
+# @@@@@Find reduced dimension d preserving over 95% of total energy@@@@@@@@@
