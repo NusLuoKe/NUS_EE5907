@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# @File    : q1.py
+# @File    : ca2_q1.py
 # @Author  : NusLuoKe
 
 import scipy.io
