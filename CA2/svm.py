@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 # @Time    : 2018/4/12 17:50
-# @File    : ca2_q3.py
+# @File    : svm.py
 # @Author  : NusLuoKe
 
 import numpy as np

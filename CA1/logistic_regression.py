@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# @File    : q3.py
+# @File    : logistic_regression.py
 # @Author  : NusLuoKe
 
 import numpy as np

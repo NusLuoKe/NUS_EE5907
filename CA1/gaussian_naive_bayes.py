@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# @File    : q2.py
+# @File    : gaussian_naive_bayes.py
 # @Author  : NusLuoKe
 
 

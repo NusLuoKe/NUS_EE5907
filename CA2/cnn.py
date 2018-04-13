@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 # @Time    : 2018/3/12 17:37
-# @File    : MNIST_01.py
+# @File    : cnn.py
 # @Author  : NusLuoKe
 
 import os
@@ -13,8 +13,6 @@ from keras.models import Sequential
 import matplotlib.pyplot as plt
 from keras.datasets import mnist
 from keras.utils import to_categorical
-
-from CA2_optional import util, my_models
 
 
 def plot_acc_loss(h, nb_epoch):
@@ -93,7 +91,7 @@ h = model.fit(x_train, y_train, epochs=nb_epoch, batch_size=batch_size, validati
               shuffle=True, verbose=2, )
 
 # save the model to the following directory
-model_dir = 'S:/MNIST_MODELS/model_01'
+model_dir = 'S:/EE5907_CNN/models'
 if not os.path.isdir(model_dir):
     os.makedirs(model_dir)
 model.save(model_dir + '/MNIST_MODEL_01.h5')
@@ -103,7 +101,7 @@ end = time.time()
 print('@ Total Time Spent: %.2f seconds' % (end - start))
 
 # plot figures of accuracy and loss of every epoch and a visible test result
-util.plot_acc_loss(h, nb_epoch)
+plot_acc_loss(h, nb_epoch)
 
 # print loss and accuracy on the whole training set and test set
 loss, accuracy = model.evaluate(x_train, y_train, verbose=0)

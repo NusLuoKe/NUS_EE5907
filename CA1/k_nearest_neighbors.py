@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# @File    : q4.py
+# @File    : k_nearest_neighbors.py
 # @Author  : NusLuoKe
 
 import matplotlib.pyplot as plt
