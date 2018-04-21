@@ -19,17 +19,18 @@ x_test = x_test.astype('float32')
 x_train = x_train / 255.
 x_test = x_test / 255.
 
-# # Use raw digit images as inputs to linear SVM
-# for c in [0.01, 0.1, 1, 10]:
-#     print("SVM classification process begin. C=%s" % c)
-#     model = SVC(C=c, kernel="linear", probability=True)
-#     model.fit(x_train, y_train)
-#     train_acc = model.score(x_train, y_train)
-#     test_acc = model.score(x_test, y_test)
-#     print("Use raw digit images as inputs to linear SVM when C=%s, training accuracy=%.2f%%" % (c, train_acc * 100))
-#     print("Use raw digit images as inputs to linear SVM when C=%s, test accuracy=%.2f%%" % (c, test_acc * 100))
+# Use raw digit images as inputs to linear SVM
+for c in [0.01, 0.1, 1, 10]:
+    print("SVM classification process begin. C=%s" % c)
+    model = SVC(C=c, kernel="linear", probability=True)
+    model.fit(x_train, y_train)
+    train_acc = model.score(x_train, y_train)
+    test_acc = model.score(x_test, y_test)
+    print("Use raw digit images as inputs to linear SVM when C=%s, training accuracy=%.2f%%" % (c, train_acc * 100))
+    print("Use raw digit images as inputs to linear SVM when C=%s, test accuracy=%.2f%%" % (c, test_acc * 100))
 
-########################################################################
+#######################################################################
+
 ########################################################################
 # Use the data vectors after PCA pre-processing as inputs to linear SVM
 # Get covariance matrix
@@ -51,35 +52,35 @@ n40_eig_val_train_index = sorted_eig_val_train[0:40]  # take the index of the to
 n40_eig_vect_train = eig_vect_train[:, n40_eig_val_train_index]
 x40_train = np.matmul(zero_mean_train, n40_eig_vect_train)
 x40_test = np.matmul(zero_mean_test, n40_eig_vect_train)
-# for c in [0.01, 0.1, 1, 10]:
-#     print("SVM classification process begin.Reduce the dimensionality from 784 to 40, C=%s" % c)
-#     model = SVC(C=c, kernel="linear", probability=True)
-#     model.fit(x40_train, y_train)
-#     train_acc = model.score(x40_train, y_train)
-#     test_acc = model.score(x40_test, y_test)
-#     print("Reduce the dimensionality from 784 to 40 as inputs to linear SVM when C=%s, training accuracy=%.2f%%" % (
-#         c, train_acc * 100))
-#     print("Reduce the dimensionality from 784 to 40 as inputs to linear SVM when C=%s, test accuracy=%.2f%%" % (
-#         c, test_acc * 100))
-# # @@@@@@@@@@@@@@@@@@@@ N=40 end@@@@@@@@@@@@@@@@@@@@@@@@@
-#
-# # @@@@@@@@@@@@@@@@@@@@ N=80 start@@@@@@@@@@@@@@@@@@@@@@@
-# n80_eig_val_train_index = sorted_eig_val_train[0:80]  # take the index of the top n values
-# # Get the desired eigen vectors and low dimensional data
-# n80_eig_vect_train = eig_vect_train[:, n80_eig_val_train_index]
-# x80_train = np.matmul(zero_mean_train, n80_eig_vect_train)
-# x80_test = np.matmul(zero_mean_test, n80_eig_vect_train)
-# for c in [0.01, 0.1, 1, 10]:
-#     print("SVM classification process begin.Reduce the dimensionality from 784 to 80, C=%s" % c)
-#     model = SVC(C=c, kernel="linear", probability=True)
-#     model.fit(x80_train, y_train)
-#     train_acc = model.score(x80_train, y_train)
-#     test_acc = model.score(x80_test, y_test)
-#     print("Reduce the dimensionality from 784 to 80 as inputs to linear SVM when C=%s, training accuracy=%.2f%%" % (
-#         c, train_acc * 100))
-#     print("Reduce the dimensionality from 784 to 80 as inputs to linear SVM when C=%s, test accuracy=%.2f%%" % (
-#         c, test_acc * 100))
-# # @@@@@@@@@@@@@@@@@@@@ N=80 end@@@@@@@@@@@@@@@@@@@@@@@@@
+for c in [0.01, 0.1, 1, 10]:
+    print("SVM classification process begin.Reduce the dimensionality from 784 to 40, C=%s" % c)
+    model = SVC(C=c, kernel="linear", probability=True)
+    model.fit(x40_train, y_train)
+    train_acc = model.score(x40_train, y_train)
+    test_acc = model.score(x40_test, y_test)
+    print("Reduce the dimensionality from 784 to 40 as inputs to linear SVM when C=%s, training accuracy=%.2f%%" % (
+        c, train_acc * 100))
+    print("Reduce the dimensionality from 784 to 40 as inputs to linear SVM when C=%s, test accuracy=%.2f%%" % (
+        c, test_acc * 100))
+# @@@@@@@@@@@@@@@@@@@@ N=40 end@@@@@@@@@@@@@@@@@@@@@@@@@
+
+# @@@@@@@@@@@@@@@@@@@@ N=80 start@@@@@@@@@@@@@@@@@@@@@@@
+n80_eig_val_train_index = sorted_eig_val_train[0:80]  # take the index of the top n values
+# Get the desired eigen vectors and low dimensional data
+n80_eig_vect_train = eig_vect_train[:, n80_eig_val_train_index]
+x80_train = np.matmul(zero_mean_train, n80_eig_vect_train)
+x80_test = np.matmul(zero_mean_test, n80_eig_vect_train)
+for c in [0.01, 0.1, 1, 10]:
+    print("SVM classification process begin.Reduce the dimensionality from 784 to 80, C=%s" % c)
+    model = SVC(C=c, kernel="linear", probability=True)
+    model.fit(x80_train, y_train)
+    train_acc = model.score(x80_train, y_train)
+    test_acc = model.score(x80_test, y_test)
+    print("Reduce the dimensionality from 784 to 80 as inputs to linear SVM when C=%s, training accuracy=%.2f%%" % (
+        c, train_acc * 100))
+    print("Reduce the dimensionality from 784 to 80 as inputs to linear SVM when C=%s, test accuracy=%.2f%%" % (
+        c, test_acc * 100))
+# @@@@@@@@@@@@@@@@@@@@ N=80 end@@@@@@@@@@@@@@@@@@@@@@@@@
 
 # @@@@@@@@@@@@@@@@@@@@ N=200 start@@@@@@@@@@@@@@@@@@@@@@@
 n200_eig_val_train_index = sorted_eig_val_train[0:200]  # take the index of the top n values
@@ -105,8 +106,8 @@ for c in [0.01, 0.1, 1, 10]:
 # @@@@@@@@@@@@@@@@@@@@ N=40 start@@@@@@@@@@@@@@@@@@@@@@@
 kernel_svm_train = x40_train
 kernel_svm_test = x40_test
-for c in [0.01, 0.1, 1, 10]:
-    for gma in [0.1, 1, 10, 100]:
+for c in [0.01, 0.1, 1]:
+    for gma in [0.1, 1, 10]:
         print("SVM classification process begin.Reduce the dimensionality from 784 to 40, C=%s,gamma=%s" % (c, gma))
         model = SVC(C=c, gamma=gma, kernel="rbf", probability=True)
         model.fit(x40_train, y_train)

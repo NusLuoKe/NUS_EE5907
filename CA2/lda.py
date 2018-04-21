@@ -158,6 +158,36 @@ score = model.score(x9_test, y_test)
 print("reduce the dimensionality of raw data from 784 to 9, accuracy=%.2f%%" % (score * 100))
 # @@@@@@@@@@@@@@@@@@@@ N=9 end@@@@@@@@@@@@@@@@@@@@@@@@@
 
+# @@@@@@@@@@@@@@@@@@@@ N=10 start@@@@@@@@@@@@@@@@@@@@@@@
+n10_eig_val_train_index = sorted_eig_val_train[0:10]  # take the index of the top n values
+# Get the desired eigen vectors and low dimensional data
+n10_eig_vect_train = eig_vect_train[:, n10_eig_val_train_index]
+x10_train = np.matmul(x_train, n10_eig_vect_train)
+x10_test = np.matmul(x_test, n10_eig_vect_train)
+
+model = KNeighborsClassifier(n_neighbors=1)
+model.fit(x10_train, y_train)
+
+# evaluate the model and update the accuracies list
+score = model.score(x10_test, y_test)
+print("reduce the dimensionality of raw data from 784 to 10, accuracy=%.2f%%" % (score * 100))
+# @@@@@@@@@@@@@@@@@@@@ N=10 end@@@@@@@@@@@@@@@@@@@@@@@@@
+
+# @@@@@@@@@@@@@@@@@@@@ N=11 start@@@@@@@@@@@@@@@@@@@@@@@
+n11_eig_val_train_index = sorted_eig_val_train[0:11]  # take the index of the top n values
+# Get the desired eigen vectors and low dimensional data
+n11_eig_vect_train = eig_vect_train[:, n11_eig_val_train_index]
+x11_train = np.matmul(x_train, n11_eig_vect_train)
+x11_test = np.matmul(x_test, n11_eig_vect_train)
+
+model = KNeighborsClassifier(n_neighbors=1)
+model.fit(x11_train, y_train)
+
+# evaluate the model and update the accuracies list
+score = model.score(x11_test, y_test)
+print("reduce the dimensionality of raw data from 784 to 11, accuracy=%.2f%%" % (score * 100))
+# @@@@@@@@@@@@@@@@@@@@ N=11 end@@@@@@@@@@@@@@@@@@@@@@@@@
+
 ##############################visulize the projection#########################################
 img_0_train_2d, img_1_train_2d, img_2_train_2d, img_3_train_2d = [], [], [], []
 img_4_train_2d, img_5_train_2d, img_6_train_2d = [], [], []
