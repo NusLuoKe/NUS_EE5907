@@ -9,8 +9,6 @@ import scipy.io
 from numpy import log
 
 # load the given spam data
-# spam_data_path = 'T:/EE5907R/spamData.mat'
-# spam_data = scipy.io.loadmat(spam_data_path)
 spam_data = scipy.io.loadmat('spamData.mat')
 
 # print to see some basic information

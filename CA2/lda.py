@@ -17,7 +17,7 @@ from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.pyplot as plt
 from sklearn.neighbors import KNeighborsClassifier
 
-# LOAD MNIST DATA
+# Load MNIST data
 (X_train, y_train), (X_test, y_test) = mnist.load_data()
 x_train = X_train.reshape(X_train.shape[0], 28 * 28 * 1)
 x_test = X_test.reshape(X_test.shape[0], 28 * 28 * 1)

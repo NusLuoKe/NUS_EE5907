@@ -15,6 +15,7 @@ from keras.datasets import mnist
 from keras.utils import to_categorical
 
 
+# method to plot the result of training process
 def plot_acc_loss(h, nb_epoch):
     '''
     :param h: history, it is the return value of "fit()", h = model.fit()

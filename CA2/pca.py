@@ -33,7 +33,7 @@ x_train = X_train.reshape(X_train.shape[0], 28 * 28 * 1)
 x_test = X_test.reshape(X_test.shape[0], 28 * 28 * 1)
 x_train = x_train.astype('float32')
 x_test = x_test.astype('float32')
-# normalize pixel values to [0, 1]
+# normalize
 x_train = x_train / 255.
 x_test = x_test / 255.
 ###########################################################
