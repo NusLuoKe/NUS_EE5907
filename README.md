@@ -24,4 +24,4 @@
      
 ## See report of CA1 and CA2 assignment.
 ### ***CA1效果不是很好，CA2是满分。好好学习，学完就可以打游戏了~~~*** 
-[](https://raw.githubusercontent.com/NusLuoKe/NUS_EE5907/master/i_love_tudy.jpg)
+[~](https://raw.githubusercontent.com/NusLuoKe/NUS_EE5907/master/i_love_tudy.jpg)
