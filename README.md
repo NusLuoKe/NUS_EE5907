@@ -15,11 +15,13 @@
 * ## *CA2*
      ### Data Description
      The project will be conducted on the MNIST dataset. The MNIST dataset contains in total 70,000 handwritten digit images, which are divided into a training set of 60; 000 examples,
-      and a test set of 10,000 examples. The digits have been size-normalized and centered in a fixedsize image. The raw data and labels can be downloaded from in this [link](http://yann.lecun.com/)
+      and a test set of 10,000 examples. The digits have been size-normalized and centered in a fixedsize image. The raw data and labels can be downloaded from in this [link](http://yann.lecun.com/).
       
      ### Q1. PCA for Feature Extraction, Visualization and Classification
      ### Q2. LDA for Feature Extraction and Classification
      ### Q3. SVM for Classification 
      ### Q4. Neural Networks
      
-## See report of CA1 and CA2 assignment. 
+## See report of CA1 and CA2 assignment.
+### CA1效果不是很好，CA2是满分。好好学习，学完就可以打游戏了~~~ 
+[](https://www.jiuwa.net/photo/36808/)
