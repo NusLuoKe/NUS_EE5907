@@ -22,3 +22,5 @@
      ### Q2. LDA for Feature Extraction and Classification
      ### Q3. SVM for Classification 
      ### Q4. Neural Networks
+     
+## See report of CA1 and CA2 assignment. 
